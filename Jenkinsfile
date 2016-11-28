@@ -21,11 +21,11 @@ node {
 
         // A sleep to make sure we actually get a real difference!
         stage('Sleeping') {
-            sh "sleep 10"
+            sh "sleep 15"
         }
 
         // And a final echo to show the time when we wrap up.
-        stage('Cool Buddy!!!') {
+        stage('User prompting!!!') {
             input message: "Are you ready?"
         }
 }
