@@ -16,7 +16,7 @@ node {
             git ([url: "https://github.com/mramanathan/jenkins_pipeline_demo.git", branch: 'master'])
 	    echo "Current working directory: "
 	    sh "pwd"
-            sh "./check_python_pkgs.sh"
+            sh ('#!/bin/sh -e\n' + "sh ./check_python_pkgs.sh")
         }
 
         // A sleep to make sure we actually get a real difference!
