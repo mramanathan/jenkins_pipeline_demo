@@ -12,16 +12,16 @@ node {
 
 	// Can embed external scripts like this ?
         stage("Python Status") {
+            // clone contents of repo from specific branch, default ~> master
+            git ([url: "https://github.com/mramanathan/jenkins_pipeline_demo.git", branch: 'master'])
 	    echo "Current working directory: "
 	    sh "pwd"
-            // clone contents of repo from specific branch, default ~> master
-            // git ([url: "git://localhost/repo", branch: 'hostname'])
             sh "./check_python_pkgs.sh"
         }
 
         // A sleep to make sure we actually get a real difference!
         stage('Sleeping') {
-            sh "sleep 15"
+            sh "sleep 10"
         }
 
         // And a final echo to show the time when we wrap up.
