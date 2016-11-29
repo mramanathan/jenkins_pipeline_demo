@@ -11,13 +11,19 @@ node {
         }
 
 	// Can embed external scripts like this ?
-        stage("Python Status") {
+        stage("Python Pkgs") {
             // clone contents of repo from specific branch, default ~> master
             git ([url: "https://github.com/mramanathan/jenkins_pipeline_demo.git", branch: 'master'])
 	    echo "Current working directory: "
 	    sh "pwd"
             sh ('#!/bin/sh -e\n' + "sh ./check_python_pkgs.sh")
         }
+
+	stage("Python Info") {
+
+	    // Details of Python pkg
+	    sh "./get_python_info.sh"
+	}
 
         // A sleep to make sure we actually get a real difference!
         stage('Sleeping') {
