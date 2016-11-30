@@ -5,7 +5,6 @@ node {
 
 		// Just some echoes to show the timestamps.
 		stage('SysInfo') {
-		
 		    echo "Running on host --"
 		    // Exclude excessive output from console logs
 		    sh ('#!/bin/sh -e\n' + "echo `hostname`")
@@ -13,29 +12,24 @@ node {
 		    sh "pg /etc/debian_version"
 		}
 
-		// Can embed external scripts like this ?
-		stage("Python Pkgs") {
-		    // clone contents of repo from specific branch, default ~> master
-		    git ([url: "https://github.com/mramanathan/jenkins_pipeline_demo.git", branch: 'master'])
-		    echo "Current working directory: "
-		    sh "pwd"
-		    sh ('#!/bin/sh -e\n' + "sh ./check_python_pkgs.sh")
+		// Placeholder to store build output
+		stage("Build Output...") {
+		    sh ("mkdir -p output")
 		}
 
+		// Details of specific package -- E.g. Python
 		stage("Python Info") {
-
 		    // Details of Python pkg
 		    sh "./get_python_info.sh"
 		}
 
-		// A sleep to make sure we actually get a real difference!
-		stage('Sleeping') {
-		    sh "sleep 15"
+		// Method to generate artifacts
+		stage("Writing build artefacts") {
+		    writeFile file: "output/README.txt", text: "What's the intent & content of this archive ?\n Sampling artifact generator."
 		}
 
-		// And a final echo to show the time when we wrap up.
-		stage('User prompting!!!') {
-		    input message: "Are you ready?"
+		stage("Generating test artefact") {
+		    archiveArtifacts artifacts: "output/*.*"
 		}
         }
 }
