@@ -1,4 +1,7 @@
 // This shows a simple build wrapper example, using the Timestamper plugin.
+// node('master') ==
+//                 \/
+//                  same as node
 node {
 	// Spit out timestamps in console log for each step in various stages
 	timestamps {
@@ -12,18 +15,15 @@ node {
 		    sh "pg /etc/debian_version"
 		}
 
-		// Placeholder to store build output
-		stage("Build Output...") {
-		    sh ("mkdir -p output")
+		// Try calling a function to check pkg info
+		stage("Python Info!!!") {
+		    pkginfo 'python'
 		}
+}
 
-		// Method to generate artifacts
-		stage("Writing build artefacts") {
-		    writeFile file: "output/README.txt", text: "Sampling artifact generator."
-		}
+def pkginfo(pkgname) {
+ 
+   echo "Trying to find details of ${pkgname} package"
+   sh(dpkg-query -s ${pkgname})
 
-		stage("Generating test artefact") {
-		    archiveArtifacts artifacts: 'output/*.txt'
-		}
-        }
 }
