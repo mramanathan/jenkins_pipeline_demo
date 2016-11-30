@@ -19,11 +19,11 @@ node {
 
 		// Method to generate artifacts
 		stage("Writing build artefacts") {
-		    writeFile file: "output/README.txt", text: "What's the intent & content of this archive ?\n Sampling artifact generator."
+		    writeFile file: "output/README.txt", text: "Sampling artifact generator."
 		}
 
 		stage("Generating test artefact") {
-		    archiveArtifacts artifacts: 'output/*.txt
+		    archiveArtifacts artifacts: 'output/*.txt'
 		}
         }
 }
