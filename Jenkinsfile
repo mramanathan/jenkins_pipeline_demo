@@ -17,19 +17,13 @@ node {
 		    sh ("mkdir -p output")
 		}
 
-		// Details of specific package -- E.g. Python
-		stage("Python Info") {
-		    // Details of Python pkg
-		    sh "./get_python_info.sh"
-		}
-
 		// Method to generate artifacts
 		stage("Writing build artefacts") {
 		    writeFile file: "output/README.txt", text: "What's the intent & content of this archive ?\n Sampling artifact generator."
 		}
 
 		stage("Generating test artefact") {
-		    archiveArtifacts artifacts: "output/*.*"
+		    archiveArtifacts artifacts: 'output/*.txt
 		}
         }
 }
