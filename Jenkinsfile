@@ -24,6 +24,6 @@ node {
 def pkginfo(pkgname) {
  
    echo "Trying to find details of ${pkgname} package"
-   sh(dpkg-query -s ${pkgname})
+   sh("dpkg-query -s ${pkgname}")
 
 }
