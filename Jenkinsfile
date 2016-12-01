@@ -14,7 +14,9 @@ stage("Collect Build Info") {
 				env.build_link   = env.JOB_URL
 				env.commit_id    = env.CHANGE_ID
 				env.author       = env.CHANGE_AUTHOR
-			catch(error)
+			} catch(error) {
+				throw error
+			} finally {
 				echo "Build details could not be gathered."
 			}
 		}
