@@ -26,7 +26,9 @@ node {
 	timestamps {
 
 		echo "Fresh build on branch, ${build_branch} has been triggered by the following commits -- "
-		echo "$currentBuild.changeSets"
+		def commit_id = sh(returnStdout: true, script: 'git rev-parse --verify HEAD').trim()
+		def short_id  = commit_id.take(7)
+		echo "${short_id}" 
 		echo "This build can be accessed via, ${build_link}"
 
 		// Just some echoes to show the timestamps.
@@ -52,3 +54,4 @@ def pkginfo(pkgname) {
    sh("dpkg-query -s ${pkgname}")
 
 }
+
