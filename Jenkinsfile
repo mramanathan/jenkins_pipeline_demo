@@ -19,6 +19,7 @@ node {
 		stage("Python Info!!!") {
 		    pkginfo 'python'
 		}
+	}
 }
 
 def pkginfo(pkgname) {
