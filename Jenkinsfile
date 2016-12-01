@@ -6,18 +6,24 @@ node {
 	// Spit out timestamps in console log for each step in various stages
 	timestamps {
 
-		// Just some echoes to show the timestamps.
-		stage('SysInfo') {
-		    echo "Running on host --"
-		    // Exclude excessive output from console logs
-		    sh ('#!/bin/sh -e\n' + "echo `hostname`")
-		    echo "OS Version : "
-		    sh "pg /etc/debian_version"
-		}
+		stages {
 
-		// Try calling a function to check pkg info
-		stage("Python Info!!!") {
-		    pkginfo 'python'
+			// Just some echoes to show the timestamps.
+			stage('SysInfo') {
+
+				steps {
+				    echo "Running on host --"
+				    // Exclude excessive output from console logs
+				    sh ('#!/bin/sh -e\n' + "echo `hostname`")
+				    echo "OS Version : "
+				    sh "pg /etc/debian_version"
+				}
+
+				// Try calling a function to check pkg info
+				stage("Python Info!!!") {
+				    pkginfo 'python'
+				}
+			}
 		}
 	}
 }
