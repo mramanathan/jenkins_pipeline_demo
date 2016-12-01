@@ -12,12 +12,10 @@ stage("Collect Build Info") {
 				// Extract basic build details
 				env.build_branch = env.BRANCH_NAME
 				env.build_link   = env.JOB_URL
-				env.commit_id    = env.CHANGE_ID
-				env.author       = env.CHANGE_AUTHOR
 			} catch(error) {
 				throw error
 			} finally {
-				echo "Build details could not be gathered."
+				echo "Build details were gathered."
 			}
 		}
 	}
@@ -27,7 +25,8 @@ node {
 	// Spit out timestamps in console log for each step in various stages
 	timestamps {
 
-		echo "Git commit, ${commit_id} by ${author} on ${build_branch} triggered a fresh build"
+		echo "Fresh build on branch, ${build_branch} has been triggered by the following commits -- "
+		echo "$currentBuild.changeSets"
 		echo "This build can be accessed via, ${build_link}"
 
 		// Just some echoes to show the timestamps.
