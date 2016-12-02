@@ -2,6 +2,10 @@
 // node('master') ==
 //                 \/
 //                  same as node
+// Simple echo without 'node' context
+stage name: "Nodeless Sample Stage"
+echo 'Hello Pipeline World!!!'
+
 stage("Collect Build Info") {
 	
 	// node nested inside stage
@@ -25,10 +29,17 @@ node {
 	// Spit out timestamps in console log for each step in various stages
 	timestamps {
 
-		echo "Fresh build on branch, ${build_branch} has been triggered by the following commits -- "
+		// clone contents of repo from specific branch, default ~> master
+		// Why another cloning ? else, git rev-parse complains it's not inside repo
+		// need to read doc and re-try later
+		/* git clone and run git rev-parse on HEAD
+		git ([url: "https://github.com/mramanathan/jenkins_pipeline_demo.git", branch: 'trials'])
 		def commit_id = sh(returnStdout: true, script: 'git rev-parse --verify HEAD').trim()
 		def short_id  = commit_id.take(7)
 		echo "${short_id}" 
+		*/
+
+		echo "Fresh build on branch, ${build_branch} has been triggered by the following commits -- "
 		echo "This build can be accessed via, ${build_link}"
 
 		// Just some echoes to show the timestamps.
