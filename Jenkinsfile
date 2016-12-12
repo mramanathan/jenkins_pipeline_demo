@@ -19,6 +19,9 @@ stage("Collect Build Info") {
 			// not including include patterns, includes **
 			stash name: "trial-sources"
 
+			def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+			def short_id  = commit_id.take(7)
+
 			try {
 				// Extract basic build details
 				env.build_branch = env.BRANCH_NAME
@@ -47,6 +50,7 @@ node {
 		*/
 
 		echo "Fresh build on branch, ${build_branch} has been triggered by the following commits -- "
+		echo "${short_id}"
 		echo "This build can be accessed via, ${build_link}"
 
 		// Just some echoes to show the timestamps.
