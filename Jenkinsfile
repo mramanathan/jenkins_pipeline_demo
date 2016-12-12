@@ -16,6 +16,9 @@ stage("Collect Build Info") {
 			// what's the diff between this and git url... ?
 			checkout scm
 
+			// not including include patterns, includes **
+			stash name: "trial-sources"
+
 			try {
 				// Extract basic build details
 				env.build_branch = env.BRANCH_NAME
@@ -42,9 +45,6 @@ node {
 		def short_id  = commit_id.take(7)
 		echo "${short_id}" 
 		*/
-
-		git ([url: "https://github.com/mramanathan/jenkins_pipeline_demo.git", branch: 'trials'])
-		stash name: "trial-sources", includes: "*/*"
 
 		echo "Fresh build on branch, ${build_branch} has been triggered by the following commits -- "
 		echo "This build can be accessed via, ${build_link}"
