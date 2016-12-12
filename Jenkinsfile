@@ -20,7 +20,7 @@ stage("Collect Build Info") {
 			stash name: "trial-sources"
 
 			def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-			def short_id  = commit_id.take(7)
+			env.short_id  = commit_id.take(7)
 
 			try {
 				// Extract basic build details
