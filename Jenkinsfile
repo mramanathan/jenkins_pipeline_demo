@@ -58,6 +58,7 @@ node {
 
 			echo "Running on host --"
 			// Exclude excessive output from console logs
+			echo "Running on host : "
 			sh ('#!/bin/sh -e\n' + "echo `hostname`")
 			echo "OS Version : "
 			sh "pg /etc/debian_version"
@@ -69,6 +70,20 @@ node {
 		}
 	}
 }
+
+node {
+
+	// Spit out timestamps in console log for each step in various stages
+	timestamps {
+
+		// Collect and print all env variables
+		sh 'env > env_vars.txt'
+		readFile('env_vars.txt').split("\r?\n").each {
+			println it
+		}
+	}
+}
+
 
 def pkginfo(pkgname) {
  
