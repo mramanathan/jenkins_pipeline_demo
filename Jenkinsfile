@@ -39,17 +39,7 @@ node {
 	// Spit out timestamps in console log for each step in various stages
 	timestamps {
 
-		// clone contents of repo from specific branch, default ~> master
-		// Why another cloning ? else, git rev-parse complains it's not inside repo
-		// need to read doc and re-try later
-		/* git clone and run git rev-parse on HEAD
-		git ([url: "https://github.com/mramanathan/jenkins_pipeline_demo.git", branch: 'trials'])
-		def commit_id = sh(returnStdout: true, script: 'git rev-parse --verify HEAD').trim()
-		def short_id  = commit_id.take(7)
-		echo "${short_id}" 
-		*/
-
-		echo "Fresh build on branch, ${build_branch} has been triggered by the following commits -- "
+		echo "Fresh build on branch, ${build_branch} was triggered by the latest commit -- "
 		echo "${short_id}"
 		echo "This build can be accessed via, ${build_link}"
 
@@ -67,21 +57,28 @@ node {
 			stage("Python Info!!!") {
 			    pkginfo 'python'
 			}
+	
+			stage("Collect Env vars...") {
+			    printEnv()
+			}
 		}
 	}
 }
 
-node {
-
-	// Spit out timestamps in console log for each step in various stages
-	timestamps {
-
-		// Collect and print all env variables
-		sh 'env > env_vars.txt'
-		readFile('env_vars.txt').split("\r?\n").each {
-			println it
-		}
+@NonCPS
+def printEnv() {
+	// Collect and print all env variables
+	sh 'env > env_vars.txt'
+	def envdump = readFile('env_vars.txt')
+	echo "== START: Dump of enviroment variables =="
+	echo "${envdump}"
+	echo "== END: Dump of enviroment variables =="
+	
+	// TODO => Why isn't this loop printing ? needs further research...
+	/* readFile('env_vars.txt').split("\r?\n").each {
+		println it
 	}
+	*/
 }
 
 
