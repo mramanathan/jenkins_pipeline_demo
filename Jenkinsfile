@@ -9,7 +9,7 @@ echo 'Hello Pipeline World!!!'
 stage(" =~=~= Collect Build Info =~=~= ") {
 	
 	// node nested inside stage
-	node ('linux') {
+	node ('master') {
 
 		timestamps {
 			
@@ -35,7 +35,7 @@ stage(" =~=~= Collect Build Info =~=~= ") {
 	}
 }
 
-node('linux') {
+node('master') {
 	// Spit out timestamps in console log for each step in various stages
 	timestamps {
 
