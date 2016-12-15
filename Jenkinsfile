@@ -41,6 +41,8 @@ node('master') {
 
 		echo "Fresh build on branch, ${build_branch} was triggered by the latest commit -- "
 		echo "${short_id}"
+		echo "Build number for this build : "
+		py command: "print ${BUILD_NUMBER}'"
 		echo "This build can be accessed via, ${build_link}"
 
 		// Just some echoes to show the timestamps.
@@ -65,6 +67,11 @@ node('master') {
 			    echo "== START: Dump of enviroment variables =="
 			    echo "${envdump}"
 			    echo "== END: Dump of enviroment variables =="
+			}
+
+			stage(" =~=~= Welcome Jenkins =~=~= ") {
+			     // Howto execute external Python script ?
+			     sh ('#!/usr/bin/env python welcome.py Jenkins')
 			}
 		}
 	}
