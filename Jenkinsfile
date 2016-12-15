@@ -41,8 +41,9 @@ node('master') {
 
 		echo "Fresh build on branch, ${build_branch} was triggered by the latest commit -- "
 		echo "${short_id}"
-		echo "Build number for this build : "
-		py command: "print ${BUILD_NUMBER}'"
+		// echo "Build number for this build : "
+		// python plugin does not support this step ?
+		// py command: "print ${BUILD_NUMBER}'"
 		echo "This build can be accessed via, ${build_link}"
 
 		// Just some echoes to show the timestamps.
