@@ -72,7 +72,7 @@ node('master') {
 
 			stage(" =~=~= Welcome Jenkins =~=~= ") {
 			     // Howto execute external Python script ?
-			     sh ('#!/usr/bin/env python welcome.py Jenkins')
+			     sh 'python ./welcome.py Jenkins')
 			}
 		}
 	}
