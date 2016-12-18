@@ -16,6 +16,14 @@ stage(" =~=~= Collect Build Info =~=~= ") {
 			// what's the diff between this and git url... ?
 			checkout scm
 
+			//check node type
+			def nodeOSVal = isUnix()
+			if (nodeOSVal) {
+			   echo "==> This build is running on a Unix-type node"
+			} else {
+			   echo "==> This build is running on a Windows-type node"
+			}
+
 			// not including include patterns, includes **
 			stash name: "trial-sources"
 
