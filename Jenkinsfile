@@ -54,7 +54,7 @@ node('linux') {
 		echo "Fresh build on branch, ${build_branch} was triggered by the latest commit -- "
 		echo "${short_id}"
 		echo "Changeset generated from the latest commit includes:"
-		echo "{change_set}"
+		echo "${changeset}"
 		echo "This build can be accessed via, ${build_link}"
 
 		// python plugin does not support this step ?
