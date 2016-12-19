@@ -27,8 +27,6 @@ stage(" =~=~= Collect Build Info =~=~= ") {
 			// not including include patterns, includes **
 			stash name: "trial-sources"
 
-			def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-			env.short_id  = commit_id.take(7)
 			def file_name = sh(returnStdout: true, script: 'git log -1 --abbrev-commit --pretty=oneline --name-only | tail -n 1')
 			
 			env.changeset = file_name
@@ -54,7 +52,7 @@ node('linux') {
 
 		// Display basic details about commit and the build
 		echo "Fresh build on branch, ${build_branch} was triggered by the latest commit -- "
-		echo "${short_id}"
+		buildUtils {}
 		echo "Changeset generated from the latest commit includes:"
 		echo "${changeset}"
 		echo "This build can be accessed via, ${build_link}"
