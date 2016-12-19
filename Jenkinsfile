@@ -29,6 +29,9 @@ stage(" =~=~= Collect Build Info =~=~= ") {
 
 			def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
 			env.short_id  = commit_id.take(7)
+			def file_name = sh(returnStdout: true, script: 'git log -1 --abbrev-commit --pretty=oneline --name-only | tail -n 1')
+			
+			env.changeset = file_name
 
 			try {
 				// Extract basic build details
@@ -47,14 +50,15 @@ node('linux') {
 	// Spit out timestamps in console log for each step in various stages
 	timestamps {
 
+		// Display basic details about commit and the build
 		echo "Fresh build on branch, ${build_branch} was triggered by the latest commit -- "
 		echo "${short_id}"
 		echo "Changeset generated from the latest commit includes:"
-		sh "git log -1 --abbrev-commit --pretty=oneline --name-only | tail -n 1"
-		// echo "Build number for this build : "
+		echo "{change_set}"
+		echo "This build can be accessed via, ${build_link}"
+
 		// python plugin does not support this step ?
 		// py command: "print ${BUILD_NUMBER}'"
-		echo "This build can be accessed via, ${build_link}"
 
 		// Just some echoes to show the timestamps.
 		stage(' =~=~= OS and Python Version =~=~= ') {
