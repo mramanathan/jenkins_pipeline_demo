@@ -32,6 +32,8 @@ stage(" =~=~= Collect Build Info =~=~= ") {
 			def file_name = sh(returnStdout: true, script: 'git log -1 --abbrev-commit --pretty=oneline --name-only | tail -n 1')
 			
 			env.changeset = file_name
+			writeFile([file: 'changeset.txt', text: file_name])
+			archive('changeset.txt')
 
 			try {
 				// Extract basic build details
