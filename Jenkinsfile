@@ -49,6 +49,8 @@ node('linux') {
 
 		echo "Fresh build on branch, ${build_branch} was triggered by the latest commit -- "
 		echo "${short_id}"
+		echo "Changeset generated from the latest commit includes:"
+		sh "git log -1 --abbrev-commit --pretty=oneline --name-only | tail -n 1"
 		// echo "Build number for this build : "
 		// python plugin does not support this step ?
 		// py command: "print ${BUILD_NUMBER}'"
