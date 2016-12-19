@@ -43,7 +43,7 @@ stage(" =~=~= Collect Build Info =~=~= ") {
 	}
 }
 
-node('master') {
+node('linux') {
 	// Spit out timestamps in console log for each step in various stages
 	timestamps {
 
@@ -79,8 +79,17 @@ node('master') {
 			}
 
 			stage(" =~=~= Welcome Jenkins =~=~= ") {
+			     dir("trial-sources") { 
+			         unstash "trial-sources"
+			     }
+			     
+			     // what's in the contents?
+			     sh "ls -la ${pwd()}"
+			     
+			     sh "ls -la ${pwd()}/trial-sources"
+			     
 			     // Howto execute external Python script ?
-			     sh "python welcome.py Jenkins"
+			     sh "python ${pwd()}/trial-sources/welcome.py Jenkins"
 			}
 		}
 	}
