@@ -103,6 +103,19 @@ node('linux') {
 	}
 }
 
+node('linux') {
+	timestamps {
+		stage(" ~===~~ Rundeck trigger ~====~~ ") {
+			dir("trial-sources") {
+				unstash "trial-sources"
+			}
+
+			sh "rundeck_job.sh"
+		}
+	}
+}
+
+
 @NonCPS
 def printEnv() {
 	// TODO => Why isn't this loop printing ? needs further research...
