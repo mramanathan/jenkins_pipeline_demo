@@ -111,7 +111,7 @@ node('linux') {
 			}
 
 			// Expected behavior ==> trigger job in rundeck instance
-			sh "rundeck_job.sh"
+			sh "${pwd()}/trial-sources/rundeck_job.sh"
 		}
 	}
 }
