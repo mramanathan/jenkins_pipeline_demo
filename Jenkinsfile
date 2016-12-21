@@ -110,6 +110,7 @@ node('linux') {
 				unstash "trial-sources"
 			}
 
+			// Expected behavior ==> trigger job in rundeck instance
 			sh "rundeck_job.sh"
 		}
 	}
