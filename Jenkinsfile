@@ -97,8 +97,8 @@ node('linux') {
 			     sh "python ${pwd()}/trial-sources/welcome.py Jenkins"
 
 			    // Using shared python library
-			    pyfuel = libraryResource "${pwd()}/resources/math.py"
-			    sh pyfuel
+			    pyfuel = libraryResource "${pwd()}/trial-sources/resources/math.py"
+			    sh "pyfuel"
 			}
 		}
 	}
