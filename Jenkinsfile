@@ -95,13 +95,13 @@ node('linux') {
 			     
 			     // Howto execute external Python script ?
 			     sh "python ${pwd()}/trial-sources/welcome.py Jenkins"
+
+			    // Using shared python library
+			    pyfuel = libraryResource "${pwd()}/trial-sources/resources/math.py"
+			    sh pyfuel
 			}
 		}
 	}
-}
-
-buildUtils {
-    name = "git"
 }
 
 @NonCPS
