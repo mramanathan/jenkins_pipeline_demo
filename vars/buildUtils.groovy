@@ -1,8 +1,16 @@
 #!groovy
 
-class buildUtils {
-    def call() {
-        sh 'git rev-parse HEAD > commit_id'
-                env.COMMIT_ID = readFile('commit_id').trim()
-   }
+def call(body) {
+
+    def config = [:]
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = config
+    body()
+
+    node('linux') {
+        checkout scm
+        def url = "https://github.com/jenkinsci/${config.name}-plugin.git"
+        echo " == URL with repo name == "
+        echo "${url}"
+    }
 }

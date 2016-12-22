@@ -52,7 +52,6 @@ node('linux') {
 
 		// Display basic details about commit and the build
 		echo "Fresh build on branch, ${build_branch} was triggered by the latest commit -- "
-		buildUtils()
 		echo "Changeset generated from the latest commit includes:"
 		echo "${changeset}"
 		echo "This build can be accessed via, ${build_link}"
@@ -99,6 +98,10 @@ node('linux') {
 			}
 		}
 	}
+}
+
+buildUtils {
+    name = "git"
 }
 
 @NonCPS
