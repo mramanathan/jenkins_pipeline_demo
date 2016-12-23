@@ -1,6 +1,6 @@
-# Jenkins Pipeline
+# Jenkins Pipeline + Rundeck + Rundeck CLI
 
-Examples to showcase usage of Jenkins pipeline integrated with Rundeck
+Procedure to integrate Jenkins pipeline with Rundeck
 
 ### Pre-requisites
 
