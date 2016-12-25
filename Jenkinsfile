@@ -1,6 +1,6 @@
 // Simple build wrapper using "Declarative syntax"
 pipeline {
-  agent label:'unix'
+  agent label:'linux'
   stages {
     stage(" =~= Greet =~= ") {
       steps {
