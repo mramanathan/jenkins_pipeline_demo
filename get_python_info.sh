@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set +x
+set -o -x errexit
 
 pyinfo=`dpkg-query -s python`
 echo ${pyinfo}

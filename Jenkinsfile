@@ -12,5 +12,10 @@ pipeline {
         sh "python --version"
       }
     }
+    stage(" =~= Python Package =~= ") {
+      steps {
+        sh "get_python_info.sh"
+      }
+    }
   }   
 }
