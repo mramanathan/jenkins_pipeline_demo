@@ -1,2 +1,8 @@
 @Library('helloWorld')
-helloWorld("Jenkins")
+node('linux') {
+    timestamps {
+        stage(' =~ Shared Lib =~ ') {
+            helloWorld("Jenkins")
+        }
+    }
+}
