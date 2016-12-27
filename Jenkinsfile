@@ -1,2 +1,4 @@
 @Library('helloWorld')
-helloWorld("Jenkins")
+node('linux') {
+    helloWorld("Jenkins")
+}
