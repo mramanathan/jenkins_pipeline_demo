@@ -119,12 +119,8 @@ node('linux') {
 node('master') {
 	timestamps {
 		stage(" ~===~~ Run Playbooks ~====~~ ") {
-			dir("pipplay") {
-				unstash "trial-sources"
-			}
-
-			// ping jenkins master on lolo i/f
-			sh "ansible-playbook ${pwd()}/pipplay/ping.yml"
+			// ping jenkins master on lo i/f
+			sh "ansible-playbook ${pwd()}/playbooks/ping.yml"
 		}
 	}
 }
