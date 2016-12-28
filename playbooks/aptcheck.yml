@@ -1,0 +1,26 @@
+---
+- name: Run apt update if the host is reachable
+  hosts: all
+
+  tasks:
+
+    - shell: /bin/ping -c 5 127.0.0.1
+      register: ping_result
+
+    - debug: var=ping.stdout
+
+    - shell: /bin/hostname
+      register: hostname_result
+      when: ping_result.changed
+
+## ~~~~~~~~~~~===============~~~~~~~~~~~~~~~~~~
+## : become and become_method modules do not work
+## : with my private AWS EC2 instances !!!
+#        become: true
+#        become_method: sudo
+## : sudo does it quite charmly...
+## ~~~~~~~~~~~===============~~~~~~~~~~~~~~~~~~
+    - apt: 
+         update_cache: yes
+      sudo: yes
+

@@ -1,0 +1,9 @@
+---
+- name: echo ping status
+
+  hosts: rundeck
+
+  remote_user: ubuntu
+
+  tasks:
+  - ping:

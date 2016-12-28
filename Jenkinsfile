@@ -116,6 +116,19 @@ node('linux') {
 	}
 }
 
+node('master') {
+	timestamps {
+		stage(" ~===~~ Run Playbooks ~====~~ ") {
+			dir("pipplay") {
+				unstash "trial-sources"
+			}
+
+			// ping jenkins master on lolo i/f
+			sh "ansible-playbook ${pwd()}/pipplay/ping.yml"
+		}
+	}
+}
+
 
 @NonCPS
 def printEnv() {
