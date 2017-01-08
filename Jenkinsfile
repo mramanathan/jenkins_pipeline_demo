@@ -33,6 +33,14 @@ node {
 		    sh "sleep 15"
 		}
 
+                // Parsing the config file
+                stage(' == Capitals == ') {
+                    configFileProvider(
+                      [configFile(field: '8af9679c-adfd-402b-8028-48d35818a841', variable: 'capitals_info')]) {
+                        echo "$capitals_info"
+                    }
+                }
+
 		// And a final echo to show the time when we wrap up.
 		stage('User prompting!!!') {
 		    input message: "Are you ready?"
