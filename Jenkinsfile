@@ -3,7 +3,7 @@ node('master') {
   timestamps {
     goBuild {
       environment = "golang:1.6"
-      buildscript='''
+      buildScript='''
         go version
         go build -v /home/ubuntu/hello.go"
         /home/ubuntu/hello
