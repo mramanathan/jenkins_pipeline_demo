@@ -2,6 +2,7 @@ package main
 
 import (
     "fmt"
+    "strings"
 )
 
 func main() {
@@ -16,4 +17,5 @@ func main() {
   str2 := "jumped over"
   str3 := "lazy brown dog"
 
+  fmt.Println(str1, str2, str3)
 }
