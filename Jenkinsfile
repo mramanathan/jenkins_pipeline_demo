@@ -1,6 +1,8 @@
 node('ubuntu') {
   // Spit out timestamps in console log for each step in various stages
   timestamps {
+      /* == pull golang v1.6 docker image and generate hello binary
+            from hello.go program == */
       goBuild {
         environment = "golang:1.6"
         buildScript='''
@@ -23,7 +25,7 @@ node('ubuntu') {
         currentBuild.result = "UNSTABLE"
       }
   
-  echo "Result of go build : ${currentBuild.result}"
+      echo "Result of go build : ${currentBuild.result}"
   }
 }
 
