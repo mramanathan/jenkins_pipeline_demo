@@ -1,7 +1,6 @@
 node('ubuntu') {
   // Spit out timestamps in console log for each step in various stages
   timestamps {
-    try {
       goBuild {
         environment = "golang:1.6"
         buildScript='''
@@ -16,16 +15,13 @@ node('ubuntu') {
       if ( goResult == "PASS" ) {
         println "Go build passed !"
         currentBuild.result = "SUCCESS"
-      }
-
-      if ( goResult == "FAIL" ) {
+      } else if ( goResult == "FAIL" ) {
         println "Go build failed !"
         currentBuild.result = "FAILURE"
+      } else {
+        println "Go build unstable !"
+        currentBuild.result = "UNSTABLE"
       }
-    } catch(Exception err) {
-      println "Go build unstable !"
-      currentBuild.result = "UNSTABLE"
-    }
   
   echo "Result of go build : ${currentBuild.result}"
   }
