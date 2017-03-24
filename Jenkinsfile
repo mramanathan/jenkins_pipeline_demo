@@ -17,21 +17,6 @@ node('ubuntu') {
             ./hello
           '''
         }
-
-        def goResult = readFile('buildresult.txt').trim()
-
-        if ( goResult == "PASS" ) {
-          println "Go build passed !"
-          currentBuild.result = "SUCCESS"
-        } else if ( goResult == "FAIL" ) {
-          println "Go build failed !"
-          currentBuild.result = "FAILURE"
-        } else {
-          println "Go build unstable !"
-          currentBuild.result = "UNSTABLE"
-        }
-  
-        echo "Result of go build : ${currentBuild.result}"
       }
   }
 }
