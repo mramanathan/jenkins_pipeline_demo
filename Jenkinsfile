@@ -4,7 +4,6 @@ node('ubuntu') {
       /* == pull golang v1.6 docker image and generate hello binary
             from hello.go program == */
       goBuild {
-        wsdir = ${WORKSPACE}
         environment = "golang:1.6"
         buildScript='''
           go version
