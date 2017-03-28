@@ -11,7 +11,7 @@ node('ubuntu') {
       git url: 'https://github.com/mramanathan/jenkins_pipeline_demo', credentialsId: 'ram_github_creds'
       gitInfo {
         // tagname --> should be able to handle as input parameter
-        tagname = 'GIT_WORKFLOW_LIB_V17.03.28.00.01'
+        tagname = 'GIT_WORKFLOW_LIB_V17.03.29.00.01'
         wsdir = '${WORKSPACE}'
       }
     }
