@@ -24,7 +24,7 @@ node ('linux' && 'ubuntu') {
     // changeset associated with this commit
     def file_name = sh(returnStdout: true, script: 'git log -1 --abbrev-commit --pretty=oneline --name-only | tail -n 1').trim()
     println "~> changeset: ${file_name}, associated with commit, ${short_id}"
-    println "~> Branch referenced for this build, scm.branches"
+    println "~> Branch referenced for this build, ${scm.branches}"
   }
 }
 			
