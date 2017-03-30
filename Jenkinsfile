@@ -22,9 +22,10 @@ node ('linux' && 'ubuntu') {
     def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
     env.short_id  = commit_id.take(7)
     // changeset associated with this commit
-    def file_name = sh(returnStdout: true, script: 'git log -1 --abbrev-commit --pretty=oneline --name-only | tail -n 1').trim()
-    println "~> changeset: ${file_name}, associated with commit, ${short_id}"
+    def changeset = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-only HEAD').trim()
     println "~> Branch referenced for this build, ${scm.branches}"
+    println "~> changeset associated with commit, ${short_id}:"
+    println "${changeset}"
   }
 }
 			
