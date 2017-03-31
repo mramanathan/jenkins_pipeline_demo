@@ -34,9 +34,15 @@ node {
        println "${changeset}"
        sh "sleep 5s"
     },
+
     'Sys Info': {
        sh "uname -a"
-    },
+    }
+
+  )
+
+  parallel (
+
     'Go Compile': {
        node('master') {
          unstash 'scripts-sources'
@@ -46,13 +52,14 @@ node {
            sh "./welcome"
          }
        }
-    }
-  )
+    },
 
-  // reusing function defined outside 'node' block
-  stage(" Python Info ") {
+    // reusing function defined outside 'node' block
+    'Python Info': {
       pkginfo 'python'
-  }
+    }
+
+  )
 
 }
 
