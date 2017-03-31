@@ -1,4 +1,8 @@
-node ('linux' && 'ubuntu') {
+node {
+
+  stage('Start Clean') {
+    deleteDir()
+  }
 
   // Very useful workaround in multi-branch pipeline setup
   // https://support.cloudbees.com/hc/en-us/articles/226122247-How-to-Customize-Checkout-for-Pipeline-Multibranch
@@ -20,6 +24,7 @@ node ('linux' && 'ubuntu') {
       env.short_id  = commit_id.take(7)
       // changeset associated with this commit
       def changeset = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-only HEAD').trim()
+      // remember to approve 'scm.branches' script by your Jenkins administrator
       println "~> Branch referenced for this build, ${scm.branches}"
       println "~> changeset associated with commit, ${short_id}:"
       println "${changeset}"
@@ -30,21 +35,18 @@ node ('linux' && 'ubuntu') {
       sh "sleep 30s"
     }
   )
-}
-			
-/* Exclude excessive output from console logs
-sh ('#!/bin/sh -e\n' + "echo `hostname`")
 
-// Example for nested stages
-stage(" =~=~= Python Info!!! =~=~= ") {
-    pkginfo 'python'
-}
+  // reusing function defined outside 'node' block
+  stage(" Python Info ") {
+      pkginfo 'python'
+  }
 
+}
 
 def pkginfo(pkgname) {
- 
    echo "Trying to find details of ${pkgname} package"
    sh("dpkg-query -s ${pkgname}")
+} 
 
-} */
-
+/* Exclude excessive output from console logs
+sh ('#!/bin/sh -e\n' + "echo `hostname`") */
