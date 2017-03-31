@@ -10,7 +10,7 @@ node {
   stage('Workspace Preparation') {
     checkout([
       $class: 'GitSCM', 
-      branches: [[name: 'refs/remotes/origin/trials']], 
+      branches: [[name: 'refs/remotes/origin/parallel_construct']], 
       doGenerateSubmoduleConfigurations: false, 
       extensions: [], 
       submoduleCfg: [], 
