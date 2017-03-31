@@ -18,20 +18,34 @@ node {
     ])
   }
 
+  // stash sources for use in parallel construct
+  stash name: 'scripts-sources'
+
   parallel (
+
     'Commit Info': {
-      def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-      env.short_id  = commit_id.take(7)
-      // changeset associated with this commit
-      def changeset = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-only HEAD').trim()
-      // remember to approve 'scm.branches' script by your Jenkins administrator
-      println "~> Branch referenced for this build, ${scm.branches}"
-      println "~> changeset associated with commit, ${short_id}:"
-      println "${changeset}"
-      sh "sleep 5s"
+       def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+       env.short_id  = commit_id.take(7)
+       // changeset associated with this commit
+       def changeset = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-only HEAD').trim()
+       // remember to approve 'scm.branches' script by your Jenkins administrator
+       println "~> Branch referenced for this build, ${scm.branches}"
+       println "~> changeset associated with commit, ${short_id}:"
+       println "${changeset}"
+       sh "sleep 5s"
     },
+
     'Sys Info': {
-      sh "uname -a"
+       sh "uname -a"
+    }
+
+    'Go Compile': {
+       node('master') {
+         unstash 'scripts-sources'
+         dir('scripts') {
+           sh "go run welcome.go"
+         }
+       }
     }
   )
 
