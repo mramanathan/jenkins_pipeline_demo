@@ -1,4 +1,4 @@
-node(label) {
+node(master) {
 
   timestamps { 
 
@@ -33,8 +33,12 @@ node(label) {
 }
 
 def startBuild(label, tool) {
-  stage('Tool Info') {
-    pkginfo tool
+  timestamps {
+    node(label) {
+      stage('Tool Info') {
+        pkginfo tool
+      }
+    }
   }
 }
 
