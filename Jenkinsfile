@@ -54,7 +54,7 @@ node {
       dir('scripts/go') {
         sh "go build welcome.go"
         sh "./welcome"
-        archiveArtifacts archive: 'welcome', fingerprint: true
+        archiveArtifacts artifacts: 'welcome', fingerprint: true
       }
     }
   }
