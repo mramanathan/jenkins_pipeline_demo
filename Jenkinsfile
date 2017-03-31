@@ -19,7 +19,7 @@ node {
   }
 
   parallel (
-    stage('Commit Info') {
+    'Commit Info': {
       def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
       env.short_id  = commit_id.take(7)
       // changeset associated with this commit
@@ -28,11 +28,10 @@ node {
       println "~> Branch referenced for this build, ${scm.branches}"
       println "~> changeset associated with commit, ${short_id}:"
       println "${changeset}"
-      sh "sleep 30s"
+      sh "sleep 5s"
     },
-    stage('Sys Info') {
+    'Sys Info': {
       sh "uname -a"
-      sh "sleep 30s"
     }
   )
 
