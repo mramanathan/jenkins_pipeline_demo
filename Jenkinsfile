@@ -1,4 +1,4 @@
-node(master) {
+node('master') {
 
   timestamps { 
 
@@ -17,6 +17,10 @@ node(master) {
         extensions: [], 
         submoduleCfg: [], 
         userRemoteConfigs: [[credentialsId: 'ram_github_creds', url: 'https://github.com/mramanathan/jenkins_pipeline_demo']]])
+    }
+
+    stage('Save Sources') {
+      stash name: 'script-sources'
     }
 
     stage('Commit Info') {
@@ -41,6 +45,21 @@ def startBuild(label, tool) {
     }
   }
 }
+
+
+node {
+  timestamps {
+    stage('Go Build-Archive') {
+      unstash 'script-sources'
+      dir('scripts/go') {
+        sh "go build welcome.go"
+        sh "./welcome"
+        archiveArtifacts archive: 'welcome', fingerprint: true
+      }
+    }
+  }
+}
+
 
 configuration = [:]
 
