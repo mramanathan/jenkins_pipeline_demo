@@ -34,11 +34,9 @@ node {
        println "${changeset}"
        sh "sleep 5s"
     },
-
     'Sys Info': {
        sh "uname -a"
-    }
-
+    },
     'Go Compile': {
        node('master') {
          unstash 'scripts-sources'
