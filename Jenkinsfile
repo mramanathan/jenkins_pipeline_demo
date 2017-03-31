@@ -1,9 +1,5 @@
 node ('linux' && 'ubuntu') {
 
-/* what's the diff between this and git url... ?
-   git url allows more granularity interms of branch filetring, supplying credentials . . . */
-// checkout scm
-
   // Very useful workaround in multi-branch pipeline setup
   // https://support.cloudbees.com/hc/en-us/articles/226122247-How-to-Customize-Checkout-for-Pipeline-Multibranch
   // "branches: " can be different from the one set in job config, this is a overriding option
@@ -18,15 +14,22 @@ node ('linux' && 'ubuntu') {
     ])
   }
 
-  stage('Commit Info') {
-    def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-    env.short_id  = commit_id.take(7)
-    // changeset associated with this commit
-    def changeset = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-only HEAD').trim()
-    println "~> Branch referenced for this build, ${scm.branches}"
-    println "~> changeset associated with commit, ${short_id}:"
-    println "${changeset}"
-  }
+  parallel (
+    stage('Commit Info') {
+      def commit_id = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+      env.short_id  = commit_id.take(7)
+      // changeset associated with this commit
+      def changeset = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-only HEAD').trim()
+      println "~> Branch referenced for this build, ${scm.branches}"
+      println "~> changeset associated with commit, ${short_id}:"
+      println "${changeset}"
+      sh "sleep 30s"
+    },
+    stage('Sys Info') {
+      sh "uname -a"
+      sh "sleep 30s"
+    }
+  )
 }
 			
 /* Exclude excessive output from console logs
