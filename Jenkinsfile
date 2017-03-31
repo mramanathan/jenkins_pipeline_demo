@@ -40,8 +40,10 @@ node {
     'Go Compile': {
        node('master') {
          unstash 'scripts-sources'
-         dir('scripts') {
-           sh "go run welcome.go"
+         dir('scripts/go') {
+           sh "go build -a -v -x welcome.go"
+           archiveArtifacts artifacts: 'welcome', fingerprint: true
+           sh "./welcome"
          }
        }
     }
