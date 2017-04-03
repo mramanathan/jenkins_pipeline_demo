@@ -1,4 +1,4 @@
-node('master') {
+node('linux') {
 
   timestamps { 
 
@@ -68,8 +68,10 @@ def buildInit(label, tool) {
   configuration[configLabel] = { startBuild(label, tool) }
 }
 
-buildInit('master', 'python')
-buildInit('master', 'golang-go')
+// CAUTION: linux and ubuntu are labels for the same build agent
+// with Jenkins v2.51 and using just 'master', go build stage preceeded stages from parallel construct!!!
+buildInit('linux', 'python')
+buildInit('ubuntu', 'golang-go')
 
 parallel(configuration)
 
