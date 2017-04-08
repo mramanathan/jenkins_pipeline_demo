@@ -36,6 +36,22 @@ node('master') {
   }
 }
 
+
+configuration = [:]
+
+def buildInit(label, tool) {
+  def configLabel = label + '-' + tool
+  configuration[configLabel] = { startBuild(label, tool) }
+}
+
+stage('Parallel Builds') {
+  buildInit('master', 'python')
+  buildInit('master', 'golang-go')
+
+  parallel(configuration)
+}
+
+
 def startBuild(label, tool) {
   timestamps {
     node(label) {
@@ -45,6 +61,12 @@ def startBuild(label, tool) {
     }
   }
 }
+
+
+def pkginfo(pkgname) {
+   echo "~> Trying to find details of ${pkgname} package"
+   sh("dpkg-query -s ${pkgname}")
+} 
 
 
 node {
@@ -59,23 +81,4 @@ node {
     }
   }
 }
-
-
-configuration = [:]
-
-def buildInit(label, tool) {
-  def configLabel = label + '-' + tool
-  configuration[configLabel] = { startBuild(label, tool) }
-}
-
-buildInit('master', 'python')
-buildInit('master', 'golang-go')
-
-parallel(configuration)
-
-
-def pkginfo(pkgname) {
-   echo "~> Trying to find details of ${pkgname} package"
-   sh("dpkg-query -s ${pkgname}")
-} 
 
