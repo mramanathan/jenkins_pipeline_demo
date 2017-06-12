@@ -32,7 +32,7 @@ node {
     },
     'Build Agent Info': {
       sh "uname -a"
-    }
+    },
     'Env Info': {
       sh 'env'
     }
