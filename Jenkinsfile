@@ -33,6 +33,9 @@ node {
     'Sys Info': {
       sh "uname -a"
     }
+    'Env Info': {
+      sh 'env'
+    }
   )
 
   // reusing function defined outside 'node' block
