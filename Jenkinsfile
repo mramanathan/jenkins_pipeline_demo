@@ -2,6 +2,7 @@ node {
 
   stage('Start Clean') {
     deleteDir()
+    echo "workspace cleaned..."
   }
 
   // Very useful workaround in multi-branch pipeline setup
