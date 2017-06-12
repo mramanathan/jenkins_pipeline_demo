@@ -30,7 +30,7 @@ node {
       println "${changeset}"
       sh "sleep 5s"
     },
-    'Sys Info': {
+    'Build Agent Info': {
       sh "uname -a"
     }
     'Env Info': {
