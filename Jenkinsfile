@@ -3,7 +3,7 @@ node {
     timestamps {
       stage("JSON Lint") {
         def jsonfile = "test.json"
-        def json = "load json.groovy"
+        def json = load "json.groovy"
         json.jsonLint("${jsonfile}")
       }
     }
