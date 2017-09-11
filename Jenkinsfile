@@ -7,8 +7,8 @@ node {
           git url: 'https://github.com/mramanathan/jenkins_pipeline_demo', branch: 'callgroovy'
           def jsonfile = "test.json"
           def json = load "json.groovy"
-          def lint_status = json.jsonLint("${jsonfile}")
-          echo "Status of json lint, ${lint_status}"
+          json.jsonLint("${jsonfile}")
+          echo "Status of json lint, ${env.lint_status}"
         }
       }
     }
