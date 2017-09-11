@@ -1,0 +1,7 @@
+{
+"service": "test-service",
+"interval": "10minute",
+"repeat_interval": "5minute",
+"no_data": "normal",
+"loading_error": "warning"
+}
