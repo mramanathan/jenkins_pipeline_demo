@@ -10,10 +10,6 @@ node {
             def jsonfile = "test.json"
             def json = load "json.groovy"
             json.lint_deploy("${jsonfile}")
-            /*
-            lintok = json.jsonLint("${jsonfile}")
-            echo "Status of json lint, ${lintok}"
-            */
           }
       }
     }

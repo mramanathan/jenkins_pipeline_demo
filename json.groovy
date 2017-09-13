@@ -27,12 +27,14 @@ def lint_deploy(String ymlfile) {
                 throw err
             }
 
-            if ( "${ymllint_status}" == 2 || "${ymllint_status}" == 0 ) {
+            if ( "${ymllint_status}" == "2" || "${ymllint_status}" == "0" ) {
                 echo "~> ${ymlfile} linting PASSED"
                 currentBuild.result = "SUCCESS"
+                return
             } else {
                 echo "~> ${ymlfile} linting FAILED"
                 currentBuild.result = "FAILURE"
+                return
             }
         }
     }
