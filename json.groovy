@@ -7,8 +7,7 @@
 def lintYml(String ymlfile) {
 
     echo "~> YML file to lint, ${ymlfile}"
-
-    def lint_status = sh(returnStatus: true, script: "jsonlint-py ${ymlfile}")
+    def ymllint_status = sh(returnStatus: true, script: "jsonlint-py ${ymlfile}")
     echo "~> YML lint status, ${ymllint_status}"
 
     return ymllint_status
@@ -38,3 +37,5 @@ def lint_deploy(String ymlfile) {
         }
     }
 }
+
+return this
