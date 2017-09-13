@@ -17,13 +17,15 @@ def lintYml(String ymlfile) {
 
 def lint_deploy(String ymlfile) {
     timeout(time: 120, unit: 'SECONDS') {
-        waitUntil {
+        // waitUntil {
             def ymllint_status = ""
 
             try {
                 ymllint_status = lintYml("${ymlfile}")
+                echo "YAML lint status, ${ymllint_status}"
             } catch (Exception err) {
                 ymllint_status = "NOT DONE"
+                echo "~> YML lint status, ${ymllint_status}"
                 throw err
             }
 
@@ -36,7 +38,7 @@ def lint_deploy(String ymlfile) {
                 currentBuild.result = "FAILURE"
                 return
             }
-        }
+        // }
     }
 }
 
