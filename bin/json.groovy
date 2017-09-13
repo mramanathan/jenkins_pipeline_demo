@@ -15,17 +15,6 @@ def lintYml(String ymlfile) {
 }
 
 
-def cfgDeploy(String ymlfile) {
-
-    echo "~> YML file to deploy, ${ymlfile}"
-    def cfgdeploy_status = "OKAY"
-    echo "~> YML lint status, ${cfgdeploy_status}"
-
-    return cfgdeploy_status
-
-}
-
-
 def lint_deploy(String ymlfile) {
     timeout(time: 120, unit: 'SECONDS') {
             def ymllint_status = ""
@@ -54,7 +43,8 @@ def lint_deploy(String ymlfile) {
 
             stage('Deploy') {
                 try {
-                    cfgdeploy_status = cfgDeploy("${ymlfile}")
+                    ymldeploy = load "bin/cfgDeploy.groovy"
+                    cfgdeploy_status = ymldeploy.cfgDeploy("${ymlfile}")
                     echo "cfg deploy status, ${cfgdeploy_status}"
                 } catch (Exception err) {
                     cfgdeploy_status = "NOT DONE"
