@@ -6,9 +6,12 @@ node {
             deleteDir()
             git url: 'https://github.com/mramanathan/jenkins_pipeline_demo', branch: 'callgroovy'
             def jsonfile = "test.json"
-            def json = load "json.groovy"
+            def json = load "bin/json.groovy"
+            json.lint_deploy("${jsonfile}")
+            /*
             lintok = json.jsonLint("${jsonfile}")
             echo "Status of json lint, ${lintok}"
+            */
           }
       }
     }
