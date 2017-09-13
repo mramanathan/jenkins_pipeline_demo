@@ -8,7 +8,7 @@ def jsonLint(String jsonfile) {
 
   echo "JSON lint status, ${lint_status}"
 
-  return "${lint_status}"
+  return lint_status
 
   /*
   env.lint_status = sh(returnStatus: true, script: "jsonlint-py ${jsonfile}")
