@@ -1,7 +1,6 @@
 node {
     // Spit out timestamps in console log for each step in various stages
   timestamps {
-      ansicolor('xterm') {
         stage("JSON Lint") {
           dir('extgroovy') {
             deleteDir()
@@ -11,7 +10,6 @@ node {
             lintok = json.jsonLint("${jsonfile}")
             echo "Status of json lint, ${lintok}"
           }
-        }
       }
     }
 }
