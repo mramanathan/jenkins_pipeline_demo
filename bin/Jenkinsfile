@@ -7,9 +7,11 @@ node {
           dir('extgroovy') {
             deleteDir()
             git url: 'https://github.com/mramanathan/jenkins_pipeline_demo', branch: 'callgroovy'
+            def saythis = load "bin/echome.groovy"
+            saythis.echome("from the main Jenkinsfile")
             def jsonfile = "test.json"
             def json = load "bin/json.groovy"
-            json.lint_deploy("${jsonfile}")
+            json.lint_deploy("${jsonfile}", saythis)
           }
       }
     }

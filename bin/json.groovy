@@ -15,12 +15,13 @@ def lintYml(String ymlfile) {
 }
 
 
-def lint_deploy(String ymlfile) {
+def lint_deploy(String ymlfile, saythis) {
     timeout(time: 120, unit: 'SECONDS') {
             def ymllint_status = ""
             def cfgdeploy_status = ""
 
             stage('Lint') {
+                saythis.echome("from lint stage")
                 try {
                     ymllint_status = lintYml("${ymlfile}")
                     echo "YAML lint status, ${ymllint_status}"
@@ -42,6 +43,7 @@ def lint_deploy(String ymlfile) {
             }
 
             stage('Deploy') {
+                saythis.echome("from deploy stage")
                 try {
                     ymldeploy = load "bin/cfgDeploy.groovy"
                     cfgdeploy_status = ymldeploy.cfgDeploy("${ymlfile}")
