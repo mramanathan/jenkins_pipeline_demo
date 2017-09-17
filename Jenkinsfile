@@ -6,14 +6,15 @@ properties([
 ])
 
 if ( "${params.CFG_FILE}" == "test.json") {
-node {
-    stage('Prep') {
-		dir('sandbox') {
-            deleteDir()
+    node {
+        stage('Prep') {
+    		dir('sandbox') {
+                deleteDir()
 
-			git url: 'https://github.com/mramanathan/jenkins_pipeline_demo', branch: 'triggerme_onparams'
+    			git url: 'https://github.com/mramanathan/jenkins_pipeline_demo', branch: 'triggerme_onparams'
 
-            echo "~> This is from build job that was triggered with parameter set as ${param.CFG_FILE}"
+                echo "~> This is from build job that was triggered with parameter set as ${param.CFG_FILE}"
+            }
         }
     }
 } else {
