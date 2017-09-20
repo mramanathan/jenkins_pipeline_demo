@@ -5,7 +5,7 @@ properties([
   pipelineTriggers([])
 ])
 
-if ( "${params.CFG_FILE}" =~ /.json$/ ) {
+if ( "${params.CFG_FILE}" ) {
     node {
         stage('Param Prep') {
     		dir('sandbox') {
