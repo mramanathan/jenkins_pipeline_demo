@@ -35,7 +35,7 @@ if ( "${params.CFG_FILE}" ) {
 
 			if ( "${env.gitChangeset}" =~ /.json$/ ) {
 			    echo "~> Detected JSON in git changeset, so, will trigger a fresh build job of the same project with param set to JSON."
-			    build job: 'triggerme', parameters: [string(name: 'CFG_FILE', value: 'test.json')], propagate: false, quietPeriod: 45, wait: false
+			    build job: 'triggerme', parameters: [string(name: 'CFG_FILE', value: '${env.gitChangeset')], propagate: false, quietPeriod: 45, wait: false
 			} else {
 			    echo "~> No JSON in the git changeset, so, no fresh build job triggered."
 			}
