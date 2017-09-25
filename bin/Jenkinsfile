@@ -1,18 +1,15 @@
 #!/usr/bin/groovy
 
 node {
-    // Spit out timestamps in console log for each step in various stages
-  timestamps {
-        stage("JSON Lint") {
-          dir('extgroovy') {
-            deleteDir()
-            git url: 'https://github.com/mramanathan/jenkins_pipeline_demo', branch: 'callgroovy'
-            def saythis = load "bin/echome.groovy"
-            saythis.echome("from the main Jenkinsfile")
-            def jsonfile = "test.json"
-            def json = load "bin/json.groovy"
-            json.lint_deploy("${jsonfile}", saythis)
-          }
-      }
+    stage("Simple Load") {
+        def helloworld
+        echo "~> Before the remote loader gets in to action..."
+        fileLoader.withGit('https://github.com/mramanathan/jenkins_pipeline_remote_loader_libs.git', 'master', null, '') {
+            helloworld = fileLoader.load('bin/echoMessage.groovy')
+        }
+    }
+
+    stage("Remote Message") {
+        helloworld.echome("Mr.Jenkins!!!")
     }
 }
