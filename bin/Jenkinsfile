@@ -9,9 +9,8 @@ node {
         dir("loaders") {
             deleteDir()
             git url: 'https://github.com/mramanathan/jenkins_pipeline_demo.git', branch: 'remote_loader'
-            sh 'ls -lta'
             echo "~> Before the remote loader gets in to action..."
-            fileLoader.withGit('https://github.com/mramanathan/jenkins_pipeline_remote_loader_libs.git', 'master', null, '') {
+            fileLoader.withGit('https://github.com/mramanathan/jenkins_pipeline_remote_loader_libs.git', 'master', null, 'linux') {
                 helloworld = fileLoader.load('bin/echoMessage.groovy')
                 jsonlint = fileLoader.load('bin/jsonprocess.groovy')
             }
@@ -24,7 +23,6 @@ node {
             helloworld.echome("Mr.Jenkins!!!")
             echo "~> Actually, this is JSON lint, but too many ymls to be changed to JSON!!!"
             jsonlint.lint_deploy("${jsonfile}", helloworld)
-            sh 'ls -lta'
         }
     }
 }
