@@ -1,12 +1,15 @@
 #!/usr/bin/groovy
 
 
-def helloworld
+def helloworld, jsonlint
 
 
 node {
     stage("Simple Load") {
         dir("loaders") {
+            deleteDir()
+            git url: 'https://github.com/mramanathan/jenkins_pipeline_demo.git', branch: 'remote_loader'
+            sh 'ls -lta'
             echo "~> Before the remote loader gets in to action..."
             fileLoader.withGit('https://github.com/mramanathan/jenkins_pipeline_remote_loader_libs.git', 'master', null, '') {
                 helloworld = fileLoader.load('bin/echoMessage.groovy')
@@ -20,7 +23,8 @@ node {
             def jsonfile = "test.json"
             helloworld.echome("Mr.Jenkins!!!")
             echo "~> Actually, this is JSON lint, but too many ymls to be changed to JSON!!!"
-            jsonlint.lint_deploy("${ymlfile}", helloworld)
+            jsonlint.lint_deploy("${jsonfile}", helloworld)
+            sh 'ls -lta'
         }
     }
 }
