@@ -1,0 +1,8 @@
+---
+# User supplied tags.
+tags: ["v17.09.14.01.00", "latest"] # optional field
+# The docker version to use while building the image
+docker_version: "1.12.1-0" # optional field with same default
+ecr_repo_name: "ecsdemo/test-service2" # mandatory field
+aws_account: "0123456789" # mandatory field
+aws_ecr_uri: "dkr.ecr.us-west-2.amazonaws.com" # mandatory field
