@@ -1,8 +1,18 @@
 ---
-# User supplied tags.
-tags: ["v17.09.14.01.00", "latest"] # optional field
+# User supplied tags. Note that Jenkins will add some system generated
+# tags in addition to the user tags.
+tags: ["v17.09.15.01.00", "latest"] # optional field
 # The docker version to use while building the image
 docker_version: "1.12.1-0" # optional field with same default
-ecr_repo_name: "ecsdemo/test-service2" # mandatory field
-aws_account: "0123456789" # mandatory field
-aws_ecr_uri: "dkr.ecr.us-west-2.amazonaws.com" # mandatory field
+aws_ecr: {
+  ecr_repo_name: "mydemo/test-service1", # mandatory field
+  aws_account: "001123456789", # mandatory field
+  aws_ecr_uri: "dkr.ecr.us-west-2.amazonaws.com" # mandatory field
+}
+vmware_harbor: {
+  repo_name: "test1/agent_alpine", # mandatory field
+  account: "192.168.10.12", # mandatory field
+  repo_uri: "192.168.10.12"  # mandatory field
+}
+# Keep only the last (latest) n number of images in the ECR repository
+keep_last_image_count: 10 # optional field with sane default
