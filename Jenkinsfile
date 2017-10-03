@@ -13,6 +13,7 @@ node {
 				println "AWS ECR, " + awsecr["repo_name"]
 				println "AWS account, " + awsecr["account"]
 				println "AWS ECR URI, " + awsecr["repo_uri"]
+				env.awsecr = "YES"
 			 }
 
 			 if ( vmharbor["active"] == "yes" ) {
@@ -20,8 +21,10 @@ node {
 				println vmharbor["repo_name"]
 				println vmharbor["account"]
 				println vmharbor["repo_uri"]
+				env.vmharbor = "YES"
 			 }
 
+			 sh(returnStdout: true, script: "sh runme.sh")
 		}
 	}
 }
