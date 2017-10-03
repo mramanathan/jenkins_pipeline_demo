@@ -3,7 +3,7 @@
 echo "Dumping environment vars and values..."
 printenv
 
-if [[ "$vmharbor" = "YES" ]]
+if [ "$vmharbor" == "YES" ]
 then
    echo "make changes to /etc/default/docker"
 else
