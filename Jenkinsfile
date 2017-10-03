@@ -8,14 +8,14 @@ node {
 			 awsecr = yamlcfg["aws_ecr"]
 			 vmharbor = yamlcfg["vmware_harbor"]
 
-			 if ( awsecr["active]" == "yes" ) {
+			 if ( awsecr["active"] == "yes" ) {
 			 	println "AWS ECR configs: "
 				println "AWS ECR, " + awsecr["repo_name"]
 				println "AWS account, " + awsecr["account"]
 				println "AWS ECR URI, " + awsecr["repo_uri"]
 			 }
 
-			 if ( vmharbor["active]" == "yes" ) {
+			 if ( vmharbor["active"] == "yes" ) {
 			 	println "VMWare Harbor configs: "
 				println vmharbor["repo_name"]
 				println vmharbor["account"]
