@@ -24,7 +24,8 @@ node {
 				env.vmharbor = "YES"
 			 }
 
-			 sh(returnStdout: true, script: "sh runme.sh")
+			 def dkr_cfg = sh(returnStdout: true, script: "/bin/bash runme.sh")
+			 println "Docker config decision, " + dkr_cfg
 		}
 	}
 }
