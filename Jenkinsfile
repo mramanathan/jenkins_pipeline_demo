@@ -6,6 +6,7 @@ pipeline {
   }
   
   stages {
+    
     stage(" =~= Greet =~= ") {
       steps {
         echo "Hello Jenkins"
@@ -20,9 +21,12 @@ pipeline {
     
     stage(" =~= Python Package =~= ") {
       steps {
-        sh "get_python_info.sh"
+          // without explicit call to /bin/bash, execution would fail complaining about set options used in the script.
+          script {
+              def pyinfo = sh (returnStdout: true, script: "/bin/bash ${env.WORKSPACE}/get_python_info.sh").trim()
+              echo "python info, ${pyinfo}"              
+          }
       }
-    }
-    
+    }   
   }   
 }
