@@ -25,15 +25,30 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
+        stage('test') {
             steps {
                 script {
                     // https://hub.docker.com/r/tutum/hello-world/
-                    def container = tutum_image.run('-p 80')
-                    println image.id + " container is running at host port, " + container.port(80)
-                    image.tag("${GIT_HASH}")
-                    if ( "${env.BRANCH_NAME}" == "master" ) {
-                        image.tag("LATEST")
+                    def container = image.run('-p 80')
+                    def contport = container.port(80)
+                    println image.id + " container is running at host port, " + contport
+                    def resp = sh(returnStdout: true,
+                                        script: """
+                                                set -x
+                                                curl -w "%{http_code}" -o /dev/null -s \
+                                                http://\"${contport}\"
+                                                """
+                                        ).trim()
+                    if ( res[ == "200" ) {
+                        println "tutum hello world is alive and kicking!"
+                        image.tag("${GIT_HASH}")
+                        if ( "${env.BRANCH_NAME}" == "master" ) {
+                            image.tag("LATEST")
+                        }
+                        currentBuild.result = "SUCCESS"
+                    } else {
+                        println "Humans are mortals."
+                        currentBuild.result = "FAILURE"
                     }
                 }
             }
