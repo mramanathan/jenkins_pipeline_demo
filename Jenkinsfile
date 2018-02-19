@@ -39,7 +39,7 @@ pipeline {
                                                 http://\"${contport}\"
                                                 """
                                         ).trim()
-                    if ( res[ == "200" ) {
+                    if ( resp == "200" ) {
                         println "tutum hello world is alive and kicking!"
                         image.tag("${GIT_HASH}")
                         if ( "${env.BRANCH_NAME}" == "master" ) {
