@@ -4,7 +4,8 @@ pipeline {
         timestamps()
     }
     environment {
-        IMAGE = "custom-tutum"
+        IMAGE = "raspamdocker/osfy"
+        REGISTRY = "https://registry.hub.docker.com"
     }
     stages {
         stage('prep') {
@@ -34,16 +35,18 @@ pipeline {
                     println image.id + " container is running at host port, " + contport
                     def resp = sh(returnStdout: true,
                                         script: """
-                                                set -x
+                                                set +x
                                                 curl -w "%{http_code}" -o /dev/null -s \
                                                 http://\"${contport}\"
                                                 """
                                         ).trim()
                     if ( resp == "200" ) {
                         println "tutum hello world is alive and kicking!"
-                        image.tag("${GIT_HASH}")
-                        if ( "${env.BRANCH_NAME}" == "master" ) {
-                            image.tag("LATEST")
+                        docker.withRegistry("${env.REGISTRY}", 'docker-hub-entree') {
+                            image.push("${GIT_HASH}")
+                            if ( "${env.BRANCH_NAME}" == "master" ) {
+                                image.push("LATEST")
+                            }
                         }
                         currentBuild.result = "SUCCESS"
                     } else {
