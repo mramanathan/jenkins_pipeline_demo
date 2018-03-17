@@ -1,0 +1,59 @@
+{
+    "variables": {
+        "aws_vpc_id": "",
+        "subnet_id": "",
+        "region": "",
+        "source_ami": "",
+        "version": "{{isotime \"2006-01-02\"}}-{{env `BUILD_NUMBER`}}",
+        "user": "{{env `USER`}}"
+    },
+    "builders": [{
+        "type": "amazon-ebs",
+        "region": "{{user `region`}}",
+        "source_ami": "{{user `source_ami`}}",
+        "instance_type": "t2.small",
+        "ssh_username": "ubuntu",
+        "ami_name": "amibuild-jenkinspoc-pipeline-{{user `version`}}",
+        "enhanced_networking": "false",
+        "force_deregister": "true",
+        "iam_instance_profile": "jenkins-poc-ecs-stack-EC2Role-2PVVZ9ORYTJN",
+        "vpc_id": "{{user `aws_vpc_id`}}",
+        "subnet_id": "{{user `subnet_id`}}",
+        "ami_description": "amibuild-jenkinspoc-pipeline-{{user `version`}}",
+        "ami_regions": [
+            "us-west-2"
+        ],
+        "tags": {
+            "Product": "jenkinspoc-pipeline",
+            "BaseAMIOS": "Ubuntu-14.04",
+            "BaseAMI": "{{user `source_ami`}}",
+            "Name": "jenkinspoc-pipeline-{{user `version`}}",
+            "Created_Date": "{{isotime \"2006-01-02\"}}",
+            "Created_By": "{{user `user`}}",
+            "BuildSource": "amibuild-jenkinspoc-pipeline"
+        }
+    }],
+    "provisioners": [{
+        "type": "shell",
+        "inline": [
+            "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init ...'; sleep 1; done"
+         ],
+        "inline": [
+            "sudo apt-get install -qq -y software-properties-common aptitude",
+            "sudo apt-add-repository -y ppa:ansible/ansible-1.9",
+            "sleep 2",
+            "sudo apt-get -qq update -y",
+            "sudo apt-get install -qq -y ansible python-pip",
+            "sleep 2",
+            "sudo pip install -U pip"
+        ]
+    },{
+        "type": "shell",
+        "inline": [
+            "sudo apt-get -qq -y --auto-remove autoremove",
+            "sudo apt-get -qq -y clean all",
+            "sudo apt-get -qq -y autoclean all",
+            "sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*"
+        ]
+    }]
+}
