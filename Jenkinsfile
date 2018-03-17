@@ -1,7 +1,6 @@
 pipeline {
-    agent any
-    options {
-        timestamps()
+    agent {
+        label 'linux'
     }
     environment {
         IMAGE = "raspamdocker/osfy"
