@@ -12,7 +12,7 @@
         "region": "{{user `region`}}",
         "source_ami": "{{user `source_ami`}}",
         "instance_type": "t2.small",
-        "ssh_username": "ubuntu",
+        "ssh_username": "ec2_user",
         "ami_name": "amibuild-jenkinspoc-pipeline-{{user `version`}}",
         "enhanced_networking": "false",
         "force_deregister": "true",
@@ -39,10 +39,8 @@
             "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init ...'; sleep 1; done"
          ],
         "inline": [
-            "sudo apt-get -qq update -y",
-	    "sleep 5",
-            "sudo apt-get install -qq -y software-properties-common aptitude",
-            "sudo apt-get install -qq -y ansible python-pip"
+            "sudo yum update -v -y",
+	    "sumdo yum install -y nc"
         ]
     },{
         "type": "shell",
