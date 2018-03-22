@@ -8,29 +8,39 @@
         "user": "{{env `USER`}}"
     },
     "builders": [{
-        "type": "amazon-ebs",
+        "type": "amazon-chroot",
+        "from_scratch": "true",
+        "ami_virtualization_type": "hvm",
         "region": "{{user `region`}}",
         "source_ami": "{{user `source_ami`}}",
-        "instance_type": "t2.small",
-        "ssh_username": "ec2_user",
-        "ami_name": "amibuild-jenkinspoc-pipeline-{{user `version`}}",
+        "ami_name": "jenkinspoc-pipeline-{{user `version`}}",
         "enhanced_networking": "false",
         "force_deregister": "true",
-        "iam_instance_profile": "ecs-jenkins-dev",
-        "vpc_id": "{{user `aws_vpc_id`}}",
-        "subnet_id": "{{user `subnet_id`}}",
-        "ami_description": "amibuild-jenkinspoc-pipeline-{{user `version`}}",
+        "ami_description": "jenkinspoc-pipeline-{{user `version`}}",
+        "root_volume_size": 5,
+        "root_device_name": "xvda",
+        "ami_block_device_mappings": [{
+            "device_name": "xvda",
+            "delete_on_termination": true,
+            "volume_type": "gp2"
+        }],
+        "pre_mount_commands": [
+             "parted {{.Device}} mklabel msdos mkpart primary 1M 100% set 1 boot on print",
+             "mkfs.ext4 {{.Device}}1"
+        ],
         "ami_regions": [
             "us-west-2"
         ],
         "tags": {
             "Product": "jenkinspoc-pipeline",
-            "BaseAMIOS": "Ubuntu-14.04",
+            "BaseAMIOS": "Ubuntu-14.04LTS",
             "BaseAMI": "{{user `source_ami`}}",
+            "BaseRepo": "{{user `repo`}}",
+            "BaseHash": "{{user `commit`}}",
             "Name": "jenkinspoc-pipeline-{{user `version`}}",
             "Created_Date": "{{isotime \"2006-01-02\"}}",
             "Created_By": "{{user `user`}}",
-            "BuildSource": "amibuild-jenkinspoc-pipeline"
+            "BuildSource": "jenkinspoc-pipeline"
         }
     }],
     "provisioners": [{
@@ -40,15 +50,7 @@
          ],
         "inline": [
             "sudo yum update -v -y",
-	    "sumdo yum install -y nc"
-        ]
-    },{
-        "type": "shell",
-        "inline": [
-            "sudo apt-get -qq -y --auto-remove autoremove",
-            "sudo apt-get -qq -y clean all",
-            "sudo apt-get -qq -y autoclean all",
-            "sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*"
+	    "sudo yum install -y nc"
         ]
     }]
 }
