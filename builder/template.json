@@ -40,7 +40,7 @@
          ],
         "inline": [
             "sudo yum update -v -y",
-	    "sumdo yum install -y nc"
+	    "sudo yum install -y nc"
         ]
     },{
         "type": "shell",
