@@ -42,13 +42,5 @@
             "sudo yum update -v -y",
 	    "sudo yum install -y nc"
         ]
-    },{
-        "type": "shell",
-        "inline": [
-            "sudo apt-get -qq -y --auto-remove autoremove",
-            "sudo apt-get -qq -y clean all",
-            "sudo apt-get -qq -y autoclean all",
-            "sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*"
-        ]
     }]
 }
