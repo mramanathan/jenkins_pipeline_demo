@@ -6,22 +6,18 @@ properties([
     string(name: 'aws_vpc_id',  defaultValue: '',    description: ''),
     string(name: 'subnet_id',   defaultValue: '', description: ''),
     string(name: 'region',      defaultValue: '',       description: ''),
-    string(name: 'source_ami',  defaultValue: '',    description: ''),
-    string(name: 'github_creds_id',  defaultValue: '',    description: '')
+    string(name: 'source_ami',  defaultValue: '',    description: '')
   ])
 ])
 
-// EC2 slaves act as Jenkins build agents and we choose one with label, 'baseami'
-node('docker-build') {
+node('amibuilder') {
     timestamps {
 
         stage('cloneme') {
             deleteDir()
 
-            dir('packer') {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${github_creds_id}", usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS']]) {
-                    sh 'git clone --branch packer https://${GIT_USER}:${GIT_PASS}@github.com/mramanathan/jenkins_pipeline_demo.git'
-                }
+			withCredentials([string(credentialsId: 'c12d52bc-6e8d-4604-a663-7fc0cfbeadd5', variable: 'GITHUB_TOKEN')]) {
+                sh 'git clone --branch amibuild https://${GITHUB_TOKEN}@github.com/mramanathan/jenkins_pipeline_demo.git'
             }
 
             sh 'sudo apt-get install -y python-pip && sudo -H pip install -U boto3'
@@ -47,13 +43,13 @@ node('docker-build') {
         }
 
 
-        stage('Generate Base AMI') {
+        stage('Build AMI') {
 
             println "~>AWS parameters passed to packer build : "
             echo "~>AWS VPC: ${params.aws_vpc_id}, AWS Subnet: ${params.subnet_id}, AWS Region: ${params.region}, Source AMI: ${params.source_ami}"
 
             // Abosule path is must for packer build
-            def jsonfile = "${WORKSPACE}/packer/jenkinspoc-testrepo/builder/template.json"
+            def jsonfile = "${WORKSPACE}/jenkins_pipeline_demo/builder/template.json"
 
             def packercmd = "${packerdir}/packer build -var aws_vpc_id=${params.aws_vpc_id} -var subnet_id=${params.subnet_id} -var region=${params.region} -var source_ami=${params.source_ami} -machine-readable -force \"${jsonfile}\" "
             echo "~>+++++=======++++++"

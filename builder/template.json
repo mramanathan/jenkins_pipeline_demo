@@ -13,24 +13,24 @@
         "source_ami": "{{user `source_ami`}}",
         "instance_type": "t2.small",
         "ssh_username": "ubuntu",
-        "ami_name": "amibuild-jenkinspoc-pipeline-{{user `version`}}",
+        "ami_name": "vanilla-amibuild-pipeline-{{user `version`}}",
         "enhanced_networking": "false",
         "force_deregister": "true",
         "iam_instance_profile": "jenkins-poc-ecs-stack-EC2Role-2PVVZ9ORYTJN",
         "vpc_id": "{{user `aws_vpc_id`}}",
         "subnet_id": "{{user `subnet_id`}}",
-        "ami_description": "amibuild-jenkinspoc-pipeline-{{user `version`}}",
+        "ami_description": "vanilla-amibuild-pipeline-{{user `version`}}",
         "ami_regions": [
             "us-west-2"
         ],
         "tags": {
-            "Product": "jenkinspoc-pipeline",
-            "BaseAMIOS": "Ubuntu-14.04",
+            "Product": "amibuild-pipeline",
+            "BaseAMIOS": "Ubuntu-16.04",
             "BaseAMI": "{{user `source_ami`}}",
-            "Name": "jenkinspoc-pipeline-{{user `version`}}",
+            "Name": "vanilla-amibuild-pipeline-{{user `version`}}",
             "Created_Date": "{{isotime \"2006-01-02\"}}",
             "Created_By": "{{user `user`}}",
-            "BuildSource": "amibuild-jenkinspoc-pipeline"
+            "BuildSource": "vanilla-amibuild-pipeline"
         }
     }],
     "provisioners": [{
