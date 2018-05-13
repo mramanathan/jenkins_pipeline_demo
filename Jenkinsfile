@@ -1,16 +1,14 @@
 node {
-    // Spit out timestamps in console log for each step in various stages
-    timestamps {
-        stage('Consul key/value Read') {
-            checkout scm
+	timestamps {
+		stage('Embed') {
+			checkout scm
+			
+			sh '''#!/usr/bin/env python
 
-            consulKVRead()
+import os
 
-            dir("consul-data") {
-                unstash "consul-data"
-                def keyval = readFile('keyvalue.txt')
-                echo " =~::~= Value fetched using consulkv global library, : ${keyval}"
-            }
-        }
-    }
+print(os.environ["PATH"])
+			'''
+		}
+	}
 }
