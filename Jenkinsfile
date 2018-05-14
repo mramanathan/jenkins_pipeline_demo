@@ -2,13 +2,14 @@ node {
 	timestamps {
 		stage('Embed') {
 			checkout scm
-			
-			sh '''#!/usr/bin/env python
+
+			sh """#!/usr/bin/env python
 
 import os
 
-print(os.environ["PATH"])
-			'''
+print('Grab the current working dir, useful to switch dirs during the build flow.')
+print(os.environ['PWD'])
+			"""
 		}
 	}
 }
